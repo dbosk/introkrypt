@@ -1,0 +1,114 @@
+% $Id$
+% Author:	Daniel Bosk
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xparse}
+\usepackage[ibycus,english,swedish]{babel}
+\usepackage[strict]{csquotes}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\usepackage[small,bf]{caption}
+\usepackage{verbatim}
+\usepackage{booktabs}
+\usepackage[multiple]{footmisc}
+\usepackage[natbib,style=alphabetic,maxbibnames=99]{biblatex}
+\addbibresource{introkrypt.bib}
+
+\author{Daniel Bosk\thanks{%
+	Detta verk är tillgängliggjort under licensen Creative Commons 
+	Erkännande-DelaLika 2.5 Sverige (CC BY-SA 2.5 SE).
+	För att se en sammanfattning och kopia av licenstexten besök URL 
+	\url{http://creativecommons.org/licenses/by-sa/2.5/se/}.
+}}
+\title{En introduktion till kryptografi\thanks{%
+  Kompendiet är skrivet för att kunna tillgodogöra sig utan förkunskaper andra 
+  än nioårig svensk grundskola.
+  För avsnitten som behandlar kryptosystemen formellt kan dock mer matematisk 
+  vana vara fördelaktig, exempelvis en inledande kurs i diskret matematik på 
+  universitetsnivå.
+  Men med detta är inte sagt att detta är ett krav, det är fullt möjligt att 
+  dessa avsnitt är givande för läsaren ändå.
+}}
+\date{\today}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newtheorem{theorem}{Sats}%[chapter]
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Korollarium}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{axiom}[definition]{Axiom}
+\newtheorem{example}{Exempel}
+\newtheorem{exercise}{Övning}
+\theoremstyle{remark}
+\newtheorem{remark}{Anmärkning}
+
+\usepackage{varioref}
+\renewcommand{\reftextbefore}{(föregående sida)}
+\renewcommand{\reftextfacebefore}{(föregående sida)}
+\renewcommand{\reftextafter}{(nästa sida)}
+\renewcommand{\reftextfaceafter}{(nästa sida)}
+\renewcommand{\reftextfaraway}[1]{(sidan~\pageref{#1})}
+\usepackage{hyperref}
+\usepackage[noabbrev,swedish]{cleveref}
+\crefname{conjecture}{förmodan}{förmodan}
+\crefname{axiom}{axiom}{axiom}
+\crefname{exercise}{övning}{övning}
+\Crefname{exercise}{Övning}{Övning}
+\crefname{corollary}{korollarium}{korollarium}
+%\crefname{proposition}{proposition}{proposition}
+
+\renewcommand{\qedsymbol}{Q.E.D.}
+
+\DeclareDocumentCommand{\N}{}{\ensuremath{\mathbb{N}}}
+\DeclareDocumentCommand{\Z}{}{\ensuremath{\mathbb{Z}}}
+\DeclareDocumentCommand{\Q}{}{\ensuremath{\mathbb{Q}}}
+\DeclareDocumentCommand{\R}{}{\ensuremath{\mathbb{R}}}
+\DeclareDocumentCommand{\powerset}{}{\ensuremath{\mathcal{P}}}
+\DeclareDocumentCommand{\U}{}{\ensuremath{\mathcal{U}}}
+\DeclareDocumentCommand{\V}{}{\ensuremath{\mathcal{V}}}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\tnot}{icke}
+\DeclareMathOperator{\tor}{eller}
+\DeclareMathOperator{\tand}{och}
+\DeclareMathOperator{\lequiv}{\Longleftrightarrow}
+\DeclareMathOperator{\congruent}{\equiv}
+
+\DeclareMathOperator{\p}{\mathcal{P}}
+\let\P\p
+\DeclareMathOperator{\C}{\mathcal{C}}
+\DeclareMathOperator{\K}{\mathcal{K}}
+\DeclareMathOperator{\E}{\mathcal{E}}
+\DeclareMathOperator{\D}{\mathcal{D}}
+
+\let\stoch\relax
+
+\renewcommand{\p}{\stoch{P}}
+\renewcommand{\c}{\stoch{C}}
+\renewcommand{\k}{\stoch{K}}
+\newcommand{\x}{\stoch{X}}
+\newcommand{\y}{\stoch{Y}}
+\newcommand{\e}{\stoch{E}}
+\newcommand{\s}{\stoch{S}}
+
+\DeclareMathOperator{\xor}{\oplus}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\input{intro}
+\input{term}
+\input{perm}
+\input{caesar}
+\input{subst}
+\input{vigenere}
+\input{perfect}
+\input{modern}
+
+\printbibliography{}
+\end{document}

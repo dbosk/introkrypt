@@ -1,0 +1,59 @@
+\section{Terminologi för kryptosystem}
+\noindent
+När vi pratar om kryptografi används viss terminologi.
+Vi har en klartext och ett klartextalfabet.
+\emph{Klartexten}\footnote{%
+	Engelskans \emph{plaintext}.
+}\index{klartext} är det hemliga meddelande som vi vill skydda med hjälp av 
+kryptografi.
+\emph{Klartextalfabetet}\footnote{%
+	Engelskans \emph{plaintext alphabet}.
+}\index{klartextalfabet} är det alfabet som används för att skriva klartexten.
+
+Sedan har vi också en kryptotext och ett kryptoalfabet.
+\emph{Kryptotext}\footnote{%
+	Engelskans \emph{ciphertext}.
+}\index{kryptotext} är den resulterande texten som vi får efter att vi 
+krypterat vår klartext.
+\emph{Kryptoalfabetet}\footnote{%
+	Engelskans \emph{ciphertext alphabet}.
+}\index{kryptoalfabet} är det alfabet som används för kryptotexten.
+
+I de kryptosystem som finns i denna text används olika delar av det vanliga 
+alfabetet som klartextalfabet respektive kryptoalfabet.
+För att kunna skilja på vilket som är vilket väljer vi våra gemener för 
+klartextalfabetet, exempelvis \emph{abc\dots}, och våra versaler för 
+kryptoalfabetet, exempelvis \emph{ABC\dots}.
+
+För att kunna kryptera och avkryptera krävs en \emph{hemlig nyckel}\footnote{%
+	Engelskans \emph{secret key}.
+}\index{hemlig nyckel}, det är alltså nyckeln som ska hållas hemlig.
+För att kunna avkryptera ett hemligt meddelande, en kryptotext, krävs nyckeln.
+Med fel nyckel ger avkrypteringen bara en text med osammanhängande 
+kombinationer av tecken från klartextalfabetet.
+
+\subsection{Formell definition av ett kryptosystem}
+\noindent
+Låt oss inleda med att definiera vad vi menar när vi skriver kryptosystem.
+Vi kommer i denna text att använda samma matematiska notation som 
+\citet{Stinson2006cta}.
+\begin{definition}\label{def:kryptosystem}
+  Ett \emph{kryptosystem}\index{kryptosystem!formell definition} är en tupel 
+  \((\P, \C, \K, \E, \D)\) där följande gäller:
+  \begin{enumerate}
+    \item \(\P\) är en ändlig mängd av möjliga klartexter.
+    \item \(\C\) är en ändlig mängd av möjliga kryptotexter.
+    \item \(\K\), kallad \emph{nyckelrymden}, är en ändlig mängd av möjliga 
+      nycklar.
+    \item För varje \(k\in \K\) finns en 
+      \emph{krypteringsregel}\index{krypteringsregel} \(e_k\in \E\) och 
+      motsvarande \emph{avkrypteringsregel}\index{avkrypteringsregel} \(d_k\in 
+      \D\).
+      Varje \(e_k\colon \P\to \C\) och \(d_k\colon \C\to \P\) är funktioner 
+      sådana att \(d_k(e_k(p)) = p\) för alla klartexter \(p\in \P\).
+  \end{enumerate}
+\end{definition}
+Det är den sistnämda egenskapen som gör att vi kan kommunicera utan 
+tvetydigheter.
+Samma egenskap säger också att det är nyckeln \(k\) som måste hållas hemlig för 
+att vår kommunikation ska hållas säker.

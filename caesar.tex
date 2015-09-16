@@ -1,0 +1,127 @@
+\section{Caesarchiffer}
+\label{sec:Caesar}
+\index{Caesarchiffer}
+Chiffret vi ska titta på i detta avsnitt är uppkallat efter den romerske 
+diktatorn och kejsaren Julius Caesar (49 f.Kr. -- 44 e.Kr.).
+Även om chiffret troligtvis uppfunnits tidigare har det fått detta namn 
+eftersom att Caesar lär ha använt det med nyckeln given 
+i \cref{tbl:Caesarchiffer}~\cite{Stinson2006cta}.
+Chiffret är annars även känt som ett skiftchiffer, vi kommer att se varför.
+
+Chiffret använder det vanliga alfabetet som både klartext- och kryptoalfabete.
+För att kryptera förskjuts kryptoalfabetet mot klartextalfabetet ett givet 
+antal steg.
+Det är antalet steg som utgör nyckeln i Caesarchiffret.
+Därefter krypteras meddelandet genom att varje klartextbokstav motsvaras av en 
+kryptotextbokstav.
+Se \cref{tbl:Caesarchiffer}.
+
+\begin{table*}
+  \caption{%
+    Tabell för att kryptera med ett Caesarchiffer med nyckeln C.
+  }\label{tbl:Caesarchiffer}
+	\centering
+  \begin{tabular}{ccccccccccccccc}
+    \toprule
+    a & b & c & d & e & f & g & h & i & j & k & l & m & n & o \\
+		C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q \\
+    \midrule
+    p & q & r & s & t & u & v & w & x & y & z & å & ä & ö \\
+		R & S & T & U & V & W & X & Y & Z & Å & Ä & Ö & A & B \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{example}
+  För att kryptera klartexten \emph{hej} slår man upp bokstav för bokstav 
+  i \cref{tbl:Caesarchiffer}.
+	Det vill säga, \emph{h $\mapsto$ J}, \emph{e $\mapsto$ G} och 
+	\emph{j $\mapsto$ L}.
+	Kryptotexten blir alltså \emph{JGL}.
+\end{example}
+
+\begin{example}\label{ex:CaesarSkatten}
+	Om vi krypterar ordet \emph{skatten} blir det \emph{UMCVVGP}.
+\end{example}
+
+\subsection{Formell definition av Caesarchiffret}
+Låt oss ge följande definition av Caesar- eller skiftchiffret.
+\begin{definition}[Skiftchiffer]\label{def:shiftCipher}\index{Caesarchiffer!formell 
+    definition}\index{skiftchiffer!formell definition}
+  Låt \(\P = \C = \K = \Z_{29}\) och låt varje bokstav i det svenska alfabetet 
+  motsvara ett unikt tal i \(\Z_{29}\).
+  För alla \(k\in \K\) definierar vi
+  \begin{align}
+    \nonumber
+    e_k(p) &= (p + k) \bmod 29, \text{\ och\ } \\
+    \nonumber
+    d_k(c) &= (c - k) \bmod 29,
+  \end{align}
+  där \(p\in \P\) är en klartextbokstav och \(c = e_k(p)\in \C\) är motsvarande 
+  kryptotextbokstav.
+\end{definition}
+
+Vi förtydligar definitionen med ett exempel.
+\begin{example}\label{ex:shiftdef}
+  Låt oss numrera bokstäverna i det svenska alfabetet enligt index med start 
+  från noll.
+  Då får vi att textsträngen \enquote{hej} skulle kunna motsvaras av tupeln \(p 
+    = (7, 4, 9)\).
+  Om vi låter nyckeln \(k\in \K\) vara \(2\) får vi att
+  \begin{align}
+    \nonumber
+    c = e_2(p) &= (e_2(7), e_2(4), e_2(9)) \\
+    \nonumber
+      &= (9, 6, 11).
+  \end{align}
+  Om vi översätter tillbaka till bokstäver får vi att \(c\) motsvarar strängen 
+  \enquote{JGL}.
+\end{example}
+
+Vi ser här att antalet möjliga nycklar \(|\K| = |\Z_{29}| = 29\) är alldeles 
+för få.
+
+\begin{exercise}
+  Försök att finna en kryptotext \(c\) och två nycklar, \(k\) och \(k^\prime\), 
+  sådana att \(d_k(c)\) och \(d_{k^\prime}(c)\) ger tolkningsbara klartexter då 
+  Caesarchiffret används som kryptosystem.
+\end{exercise}
+\begin{exercise}
+  Hur påverkar längden av kryptotexten i förhållandet till kryptosystemets 
+  blockstorlek, i Caesarchiffrets fall är blockstorleken en bokstav?
+\end{exercise}
+
+\subsection{Kryptanalys av Caesarchiffret}
+\label{sec:KryptanalysCaesar}
+\index{Caesarchiffer!kryptanalys}
+Caesarchiffret är inte ett särskilt säkert sätt att skydda information.
+Det är lätt att knäcka.
+Det finns totalt, om det svenska alfabetet används, 29 olika nycklar som kan 
+användas för kryptering och avkryptering eftersom att alfabetet maximalt kan 
+förskjutas lika många steg som det finns bokstäver\footnote{%
+	Detta kan beräknas genom att vi på den första platsen kan välja mellan 29 
+	bokstäver, på de efterföljande platserna kan då bara välja en bokstav.  Vi 
+	får då totala antalet nycklar genom \(29\cdot 1\cdot 1\cdots 1 = 29\).
+}.
+Detta är så få att det till och med enkelt kan testas för hand för att lista ut 
+vilken nyckel som använts.
+Om det finns tillgång till en dator och man kan programmera, då är det ännu 
+enklare.
+Men det går tack vare språkets egenskaper att reducera antalet nycklar som 
+behöver testas ytterligare.
+Titta på \cref{ex:CaesarSkatten} där \emph{tt} blir \emph{VV}, det är 
+långt från alla bokstäver i svenskan som upprepas på detta sätt.
+I \cref{sec:KryptanalysSubstitution} ska vi se ytterligare ett sätt att 
+kryptanalysera Caesarchiffret på.
+
+\begin{exercise}\label{xrc:caesarAddition}
+  Låt \(c\) och \(c^\prime\) vara två kryptotexter krypterade med samma nyckel 
+  \(k\).
+  Det vill säga \(c = e_k(m) = (m_1+k, m_2+k, \ldots, m_n+k)\) och \(c^\prime 
+  = e_k(m^\prime) = (m^\prime_1+k, m^\prime_2+k, \ldots, m^\prime_n+k)\), där 
+  alla aritmetiska operationer görs modulo 29.
+  Undersök vad som händer då vi utför aritmetik med \(c\) och \(c^\prime\), 
+  exempelvis \(c - c^\prime \mod 29\).
+  Hur påverkar detta inflytandet av nyckeln \(k\) på kryptotexten?
+\end{exercise}
+

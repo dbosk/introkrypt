@@ -1,0 +1,172 @@
+\section{Vigenèrechiffer}
+\index{Vigenèrechiffer}
+\citet{Singh2000tcb} har i sin bok \emph{Kodboken} gjort en kartläggning över 
+uppkomsten och förekomster av olika chiffer under historiens gång.
+Enligt honom lades grunden för Vigenèrechiffret under 1400-talet av Leon 
+Battista Alberti (1404--1472).
+Därefter vidareutvecklades hans idéer först av Johannes Trithemius (1462--1516) 
+och sedan av Giambattista della Porta (1535--1615).
+Anledningen till att metoden kallas Vigenèrechiffer är enligt honom för att den 
+är uppkallad efter Blaise de Vigenère (1523--1596) som gjorde det slutgiltiga 
+bidraget till utformningen av chiffret.
+Vigenèrechiffret användes länge, det användes till och med av sydstaterna under 
+det amerikanska inbördeskriget.
+
+Chiffret består av upprepad användning av Caesarchiffret.
+Som nyckel används ett ord, för att vara enkelt att komma ihåg, vilket 
+bokstavskombination som helst kan användas.
+Vid kryptering av en text krypteras första bokstaven i klartexten med ett 
+Caesarchiffer där första bokstaven i Vigenèrenyckeln används som nyckel.
+Därefter används den andra, den tredje, och så vidare.
+När nyckelordets alla bokstäver använts börjar man om.
+
+\begin{example}\label{ex:VigenereSkatten}
+  Om vi vill kryptera order \emph{skatten} ska bokstäverna i nyckeln användas 
+  enligt
+  \begin{verbatim}
+    skatten
+    ABCABCA
+  \end{verbatim}
+  och vi får alltså \emph{SLCTUGN} genom att använda de olika Caesarchiffren 
+  i \cref{tbl:Vigenerechiffer}.
+\end{example}
+
+\begin{table*}
+  \caption{%
+    Vigenèrechiffer med nyckeln \emph{ABC}.
+  }\label{tbl:Vigenerechiffer}
+  \centering
+  \begin{tabular}{lcccccccccc}
+    \toprule
+    Klartext & a & b & c & d & e & f & g & h & i & j \\
+    A        & A & B & C & D & E & F & G & H & I & J \\
+    B        & B & C & D & E & F & G & H & I & J & K \\
+    C        & C & D & E & F & G & H & I & J & K & L \\
+    \midrule
+    Klartext & k & l & m & n & o & p & q & r & s & t \\
+    A        & K & L & M & N & O & P & Q & R & S & T \\
+    B        & L & M & N & O & P & Q & R & S & T & U \\
+    C        & M & N & O & P & Q & R & S & T & U & V \\
+    \midrule
+    Klartext & u & v & w & x & y & z & å & ä & ö \\
+    A        & U & V & W & X & Y & Z & Å & Ä & Ö \\
+    B        & V & W & X & Y & Z & Å & Ä & Ö & A \\
+    C        & W & X & Y & Z & Å & Ä & Ö & A & B \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+Notera skillnaden mellan kryptotexten av ordet \emph{skatten} i 
+\cref{ex:CaesarSkatten}, \cref{ex:SubstitutionSkatten} och 
+\cref{ex:VigenereSkatten}.
+Upprepningen av t:et försvinner när Vigenerechiffret används.
+
+\subsection{Formell definition av Vigenèrechiffret}
+Vi går vidare med en definition av Vigenèrechiffret.
+\begin{definition}[Vigenèrechiffer]\index{Vigenèrechiffer!formell definition}
+  Låt \(n\) vara ett positivt heltal.
+  Definiera att \(\P = \C = \K = (\Z_{29})^n\).
+  För alla nycklar \(k = (k_1,\ldots,k_n)\in \K\), klartexter \(p = (p_1, 
+  \ldots, p_n)\in \P\) och kryptotexter \(c = (c_1,\ldots,c_n)\in \C\) 
+  definierar vi att
+  \begin{align}
+    \nonumber
+    e_k(p) &= (p_1 + k_1, \ldots, p_n + k_n), \text{\ och\ } \\
+    \nonumber
+    d_k(c) &= (c_1 - k_1, \ldots, c_n - k_n),
+  \end{align}
+  där alla operationer utförs i \(\Z_{29}\).
+\end{definition}
+
+Vi noterar att den enda skillnaden mellan denna definition och 
+\cref{def:shiftCipher} är att \(\P, \C, \K\) definieras som 
+\((\Z_{29})^n\) istället för \(\Z_{29}\).
+Låter vi \(n = 1\) är dessa system identiska.
+
+Om vi använder gruppen \(\Z_2\) istället för \(\Z_{29}\) kommer vi att arbeta 
+med bitsträngar av längden \(n\) bitar.
+Detta får effekten att \(e_k(p) = p \xor k\) där \(p\) och \(k\) är bitstängar 
+av längd \(n\), det vill säga operationen \emph{bitvis exklusivt eller} (XOR).
+Detta är en fundamental operation i dagens datorer.
+
+\begin{exercise}
+  Försök att finna en kryptotext \(c\) som är lika lång som nyckeln och två 
+  nycklar, \(k\) och \(k^\prime\), sådana att \(d_k(c)\) och 
+  \(d_{k^\prime}(c)\) ger tolkningsbara klartexter med detta kryptosystem.
+\end{exercise}
+\begin{exercise}
+  Om vi ändrar villkoret i föregående övning, vad händer då kryptotexten 
+  istället är längre än nyckeln?
+  Och mer intressant, varför blir det så?
+\end{exercise}
+
+\subsection{Kryptanalys av Vigenèrechiffret}
+\index{Vigenèrechiffer!kryptanalys}
+Eftersom att kryptotexten nu är krypterad med flera Caesarnycklar fungerar inte 
+längre metoden som vi tog fram i \cref{sec:KryptanalysSubstitution}.
+Friedrich Kasiski (1805--1881) publicerade år 1863 tekniken hur man 
+fullständigt knäcker chiffret utan några förkunskaper~\cite{Stinson2006cta}.
+Tidigare metoder, före Kasiski, krävde att man kände till delar av klartexten,
+att man kunde gissa nyckeln eller kände nyckelns längd.
+
+Med mycket kryptotext är det möjligt att finna upprepningar i kryptotexten.
+Avståndet mellan upprepningarna måste vara en multipel av nyckelns längd 
+eftersom att samma klartext annars skulle krypteras olika på grund av att olika 
+delar av nyckeln används.
+Det vill säga, nyckelns längd måste vara en gemensam faktor för alla avstånd 
+mellan upprepningar.
+Om vi tittar på följande exempel.
+\begin{example}\label{ex:VigenereMedUpprepning}
+  Ett Vigenèrechiffer med nyckeln \emph{ABCD} används för att kryptera texten 
+  \emph{cryptoisshortforcryptography}.
+  \begin{verbatim}
+    Nyckel:     ABCDABCDABCDABCDABCDABCDABCD
+    Klartext:   cryptoisshortforcryptography
+    Kryptotext: CSASTPKVSIQUTGQUCSASTPIUAQJB
+  \end{verbatim}
+  Avståndet mellan den upprepade texten \emph{CSASTP} är 16, från första 
+  tecken till första tecken.
+  De möjliga nyckellängderna är alltså \(16, 8, 4, 2\) eller \(1\).
+\end{example}
+Genom att finna flera sådana upprepningar är det möjligt att reducera antalet 
+möjliga nyckellängder.
+
+När nyckellängden väl är känd, låt oss säga att den är \(n\) tecken, då skrivs 
+kryptotexten med \(n\) teckens bredd.
+Som vi ser i \cref{ex:VigenereMedUpprepning} hamnar då alla tecken 
+krypterade med samma Caesarnyckel ovanför varandra i en kolumn, se 
+\cref{ex:VigenereKolumner}.
+\begin{example}\label{ex:VigenereKolumner}
+  Ett Vigenèrechiffer med nyckeln \emph{ABCD} används för att kryptera texten 
+  \emph{cryptoisshortforcryptography}.
+  \begin{verbatim}
+    Nyckel:     ABCD
+    Klartext:   cryp
+                tois
+                shor
+                tfor
+                cryp
+                togr
+                aphy
+    Kryptotext: CSAS
+                TPKV
+                SIQU
+                TGQU
+                CSAS
+                TPIU
+                AQJB
+  \end{verbatim}
+\end{example}
+Eftersom att varje kolumn nu är krypterad endast med ett Caesarchiffer kan vi 
+enkelt använda kryptanalysmetoderna från \cref{sec:KryptanalysCaesar}
+eller \cref{sec:KryptanalysSubstitution} för att lista ut varje 
+Caesarnyckel och därmed hela Vigenèrenyckeln.
+I \cref{ex:VigenereKolumner} analyserar vi den första kolumnen för att 
+komma fram till att den är krypterad med nyckeln \emph{A}, den andra kolumnen 
+är krypterad med nyckeln \emph{B}, och så vidare, och slutligen att 
+Vigenèrechiffrets nyckel är \emph{ABCD}.
+
+\begin{exercise}
+  Undersök resultatet i \cref{xrc:caesarAddition}, hur tillämpbart är 
+  detta för Vigenèrechiffret?
+\end{exercise}
